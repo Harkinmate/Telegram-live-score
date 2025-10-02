@@ -4,10 +4,14 @@ import time
 from telegram import Bot
 
 # ---------------- CONFIGURATION ----------------
-API_TOKEN = os.getenv("API_TOKEN")
-TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
-CHANNEL_ID = os.getenv("CHANNEL_ID")
+API_TOKEN = os.environ.get("API_TOKEN")
+TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
+CHANNEL_ID = os.environ.get("CHANNEL_ID")
 CHECK_INTERVAL = 60  # seconds
+
+# Validate tokens
+if not all([API_TOKEN, TELEGRAM_TOKEN, CHANNEL_ID]):
+    raise ValueError("One or more required environment variables are missing.")
 
 bot = Bot(token=TELEGRAM_TOKEN)
 posted_updates = {}  # Track posted events per match
